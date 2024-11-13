@@ -20,24 +20,20 @@ public class PlayerController : MonoBehaviour
 
     private void VerticalMovement()
     {
-        float speed = Input.GetAxisRaw("Vertical");
-        animator.SetBool("Jump", can_jump);
-        animator.SetBool("Crouch", can_crouch);
-        if (speed > 0 && !can_jump)
+        float vertical = Input.GetAxis("Vertical");
+        if(vertical > 0)
         {
-            can_jump = true;
+            animator.SetTrigger("Jump");
         }
-        else if (speed < 0 && !can_crouch)
+        if(Input.GetKeyDown(KeyCode.LeftControl))
         {
-            can_crouch= true;
+            animator.SetBool("Crouch", true);
         }
-        else if(speed == 0)
+        else
         {
-            if(can_jump)
-                can_jump = false;
-            if(can_crouch)
-                can_crouch = false;
+            animator.SetBool("Crouch", false);
         }
+        
     }
 
     private void HoriontalMovement()
