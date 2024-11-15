@@ -6,26 +6,28 @@ using UnityEngine.Windows.Speech;
 
 public class PlayerController : MonoBehaviour
 {
-    private bool can_jump = false;
-    private bool can_crouch = false;
+    private float horizontal_input_speed;
+    private Rigidbody2D rb2d;
+    [SerializeField] float running_speed;
+    [SerializeField] float jump;
     public Animator animator;
+
+    private void Awake()
+    {
+        rb2d = gameObject.GetComponent<Rigidbody2D>();
+    }
 
     private void Update()
     {
-        //running left or right
-        HoriontalMovement();
-        //jumping or crouching
-        VerticalMovement();
+        //running animation both left or right direction.
+        HorizontalInputSpeed();
+        //jumping and crouching animations.
+        VerticalInputSpeed();
     }
 
-    private void VerticalMovement()
+    private void VerticalInputSpeed()
     {
-        float vertical = Input.GetAxis("Vertical");
-        if(vertical > 0)
-        {
-            animator.SetTrigger("Jump");
-        }
-        if(Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             animator.SetBool("Crouch", true);
         }
@@ -33,22 +35,55 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("Crouch", false);
         }
-        
+        float vertical = Input.GetAxisRaw("Jump");
+        //player vertical movement (jump)
+        PlayerVerticalMovement(vertical);
+        if(vertical > 0)
+        {
+            animator.SetBool("Jump", true);
+        }
+        else if(Time.time - 0 > 0.5f)
+        {
+            animator.SetBool("Jump", false);
+        }
+    }
+    
+    void PlayerVerticalMovement(float vertical)
+    {
+        if(vertical > 0)
+        {
+            rb2d.AddForce(new Vector2(0f,jump), ForceMode2D.Impulse);
+        }
     }
 
-    private void HoriontalMovement()
+    //play animation by trigger.
+    public void PlayAnimation(string trigger)
     {
-        float speed = Input.GetAxisRaw("Horizontal");
-        animator.SetFloat("HorizontalSpeed", Mathf.Abs(speed));
+        animator.SetTrigger(trigger);
+    }
+
+    private void HorizontalInputSpeed()
+    {
+        horizontal_input_speed = Input.GetAxisRaw("Horizontal");
+        //player movement either left or right.
+        PlayerHorizontalMovement(horizontal_input_speed);
+        animator.SetFloat("HorizontalSpeed", Mathf.Abs(horizontal_input_speed));
         Vector3 scale = transform.localScale;
-        if (speed < 0)
+        if (horizontal_input_speed < 0)
         {
             scale.x = Mathf.Abs(scale.x) * -1;
         }
-        else if (speed > 0)
+        else if (horizontal_input_speed > 0)
         {
             scale.x = Mathf.Abs(scale.x);
         }
         transform.localScale = scale;
+    }
+
+    private void PlayerHorizontalMovement(float horizontal_input_speed)
+    {
+        Vector3 position = transform.position;
+        position.x += horizontal_input_speed * running_speed * Time.deltaTime;
+        transform.position = position;
     }
 }
