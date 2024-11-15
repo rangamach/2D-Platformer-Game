@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 {
     private float horizontal_input_speed;
     private Rigidbody2D rb2d;
+    private bool isGrounded = true;
     [SerializeField] float running_speed;
     [SerializeField] float jump;
     public Animator animator;
@@ -25,6 +26,15 @@ public class PlayerController : MonoBehaviour
         VerticalInputSpeed();
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.layer == 6)
+        {
+            if (!isGrounded)
+                isGrounded = true;
+        }
+    }
+
     private void VerticalInputSpeed()
     {
         if (Input.GetKeyDown(KeyCode.LeftControl))
@@ -35,25 +45,23 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("Crouch", false);
         }
-        float vertical = Input.GetAxisRaw("Jump");
-        //player vertical movement (jump)
-        PlayerVerticalMovement(vertical);
-        if(vertical > 0)
-        {
-            animator.SetBool("Jump", true);
-        }
-        else if(Time.time - 0 > 0.5f)
-        {
-            animator.SetBool("Jump", false);
-        }
+        PlayerVerticalMovement();
     }
     
-    void PlayerVerticalMovement(float vertical)
+    void PlayerVerticalMovement()
     {
-        if(vertical > 0)
+        float vertical = Input.GetAxisRaw("Jump");
+        if (vertical > 0)
         {
-            rb2d.AddForce(new Vector2(0f,jump), ForceMode2D.Impulse);
+            if (isGrounded)
+            {
+                isGrounded = false;
+                animator.SetBool("Jump", true);
+                rb2d.AddForce(new Vector2(0f, jump), ForceMode2D.Impulse);
+            }
         }
+        else
+            animator.SetBool("Jump", false);
     }
 
     //play animation by trigger.

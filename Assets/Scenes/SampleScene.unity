@@ -282,7 +282,7 @@ PrefabInstance:
     - target: {fileID: 6147314050411429517, guid: 68696abfa220bcd45b6b032ebe9b9128,
         type: 3}
       propertyPath: jump
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 6147314050411429517, guid: 68696abfa220bcd45b6b032ebe9b9128,
         type: 3}
@@ -298,6 +298,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ellen_Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8819568922140619033, guid: 68696abfa220bcd45b6b032ebe9b9128,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.427467
+      objectReference: {fileID: 0}
+    - target: {fileID: 8819568922140619033, guid: 68696abfa220bcd45b6b032ebe9b9128,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1.974478
+      objectReference: {fileID: 0}
+    - target: {fileID: 8819568922140619033, guid: 68696abfa220bcd45b6b032ebe9b9128,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: 0.0056630373
+      objectReference: {fileID: 0}
+    - target: {fileID: 8819568922140619033, guid: 68696abfa220bcd45b6b032ebe9b9128,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: 0.9242791
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68696abfa220bcd45b6b032ebe9b9128, type: 3}
