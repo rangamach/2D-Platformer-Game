@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private float horizontal_input_speed;
     private Rigidbody2D rb2d;
     private bool isGrounded = true;
+    private LevelController level_controller;
     [SerializeField] float running_speed;
     [SerializeField] float jump;
     public Animator animator;
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb2d = gameObject.GetComponent<Rigidbody2D>();
+        level_controller = FindObjectOfType<LevelController>();
     }
 
     private void Update()
@@ -35,6 +37,14 @@ public class PlayerController : MonoBehaviour
                 isGrounded = true;
                 PlayAnimation("Idle");
             }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.layer == 8)
+        {
+            transform.position = level_controller.GetCheckpoints()[level_controller.GetCheckpointCount() - 1].position;
         }
     }
 
@@ -96,5 +106,10 @@ public class PlayerController : MonoBehaviour
         Vector3 position = transform.position;
         position.x += horizontal_input_speed * running_speed * Time.deltaTime;
         transform.position = position;
+    }
+
+    public void PlayerTransform(Transform transform)
+    {
+        this.transform.position = transform.position;
     }
 }
