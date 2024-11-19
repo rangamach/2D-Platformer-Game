@@ -8,17 +8,19 @@ using UnityEngine.SceneManagement;
 public class LevelController : MonoBehaviour
 {
     private static int total_scenes;
-    private int checkpoint_count;
+    private int checkpoint_count = 1;
     private PlayerController player;
     [SerializeField] Transform[] checkpoints;
 
     private void Awake()
     {
-        player = FindObjectOfType<PlayerController>();
-        checkpoint_count = 1;
+        //number of scenes in build.
         total_scenes = SceneManager.sceneCount;
+        //spawns player at beginning when loading scene.
         transform.position = checkpoints[checkpoint_count].transform.position;
     }
+
+    //manages thw checkpoints in level.
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<PlayerController>())

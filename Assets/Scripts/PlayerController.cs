@@ -10,8 +10,11 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb2d;
     private bool isGrounded = true;
     private LevelController level_controller;
+
     [SerializeField] float running_speed;
     [SerializeField] float jump;
+    [SerializeField] ScoreController score_controller;
+
     public Animator animator;
 
     private void Awake()
@@ -111,5 +114,11 @@ public class PlayerController : MonoBehaviour
     public void PlayerTransform(Transform transform)
     {
         this.transform.position = transform.position;
+    }
+
+    public void PickUpKey()
+    {
+        score_controller.IncreaseScore(10);
+        Debug.Log("Key picked up!!!");
     }
 }
