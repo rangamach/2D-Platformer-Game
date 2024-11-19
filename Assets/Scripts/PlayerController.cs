@@ -31,13 +31,16 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.layer == 6)
         {
             if (!isGrounded)
+            {
                 isGrounded = true;
+                PlayAnimation("Idle");
+            }
         }
     }
 
     private void VerticalInputSpeed()
     {
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.LeftControl) && isGrounded)
         {
             animator.SetBool("Crouch", true);
         }
