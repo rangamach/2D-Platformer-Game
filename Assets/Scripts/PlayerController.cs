@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Windows.Speech;
 
 public class PlayerController : MonoBehaviour
@@ -120,5 +121,17 @@ public class PlayerController : MonoBehaviour
     {
         score_controller.IncreaseScore(10);
         Debug.Log("Key picked up!!!");
+    }
+
+    public void KillPlayer()
+    {
+        Debug.Log("Player Died :(");
+        ReloadLevel();
+    }
+
+    private void ReloadLevel()
+    {
+        Debug.Log("Level Restarted!!!");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

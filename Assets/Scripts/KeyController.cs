@@ -8,9 +8,9 @@ public class KeyController : MonoBehaviour
     [SerializeField] float fade_duration;
     private SpriteRenderer sprite_renderer;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.GetComponent<PlayerController>())
+        if (collision.gameObject.GetComponent<PlayerController>())
         {
             PlayerController player_controller = collision.gameObject.GetComponent<PlayerController>();
             player_controller.PickUpKey();
