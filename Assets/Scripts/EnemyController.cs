@@ -7,7 +7,8 @@ public class EnemyController : MonoBehaviour
 {
 
     [SerializeField] float patrol_distance;
-    [SerializeField] float patrol_speed; 
+    [SerializeField] float patrol_speed;
+    [SerializeField] Animator anim;
     private Transform initial_transform;
     private float mid_point;
     //If true move left to right.
@@ -16,6 +17,8 @@ public class EnemyController : MonoBehaviour
     private int look;
     //If false will pause for 5 seconds.
     private bool moving;
+    private bool flipped;
+
 
     private void Awake()
     {
@@ -24,6 +27,7 @@ public class EnemyController : MonoBehaviour
         mid_point = initial_transform.position.x + (patrol_distance);
         forward = true;
         moving = true;
+        flipped = false;
         look = 1;
     }
 
@@ -33,9 +37,23 @@ public class EnemyController : MonoBehaviour
         if (moving)
         {
             if (forward)
+            {
                 position.x += look * patrol_speed * Time.deltaTime;
+                if (!flipped)
+                {
+                    transform.localScale = new Vector3(1, 1, 1);
+                    flipped = true;
+                }
+            }
             else
+            {
                 position.x -= look * patrol_speed * Time.deltaTime;
+                if (!flipped)
+                {
+                    transform.localScale = new Vector3(-1, 1, 1);
+                    flipped = true;
+                }
+            }
         }
         else
         {
@@ -44,12 +62,18 @@ public class EnemyController : MonoBehaviour
         }
         if (Mathf.Abs(position.x - mid_point) > patrol_distance)
         {
-            moving = false;
             if (forward)
                 forward = false;
             else
                 forward = true;
+            flipped = false;
+            moving = false;
+            
         }
+        if (look == 0)
+            anim.SetFloat("Look", look);
+        else if (look == 1)
+            anim.SetFloat("Look", look);
         transform.position = position;
     }
 
