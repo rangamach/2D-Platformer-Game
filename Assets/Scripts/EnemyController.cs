@@ -33,6 +33,11 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
+        EnemyMovement();
+    }
+
+    private void EnemyMovement()
+    {
         Vector3 position = transform.position;
         if (moving)
         {
@@ -68,7 +73,7 @@ public class EnemyController : MonoBehaviour
                 forward = true;
             flipped = false;
             moving = false;
-            
+
         }
         if (look == 0)
             anim.SetFloat("Look", look);
@@ -87,8 +92,8 @@ public class EnemyController : MonoBehaviour
     {
         if(collision.gameObject.GetComponent<PlayerController>())
         {
-            Animator animator = collision.gameObject.GetComponent<Animator>();
-            animator.Play("Ellen_Death");
+            PlayerController player_controller = collision.gameObject.GetComponent<PlayerController>();
+            player_controller.LoseOneHeart();
         }
     }
 }

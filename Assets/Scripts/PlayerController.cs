@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Windows.Speech;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,10 +12,12 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb2d;
     private bool isGrounded = true;
     private LevelController level_controller;
+    private int health_left;
 
+    [SerializeField] ScoreController score_controller;
+    [SerializeField] Image[] hearts; 
     [SerializeField] float running_speed;
     [SerializeField] float jump;
-    [SerializeField] ScoreController score_controller;
 
     public Animator animator;
 
@@ -22,6 +25,8 @@ public class PlayerController : MonoBehaviour
     {
         rb2d = gameObject.GetComponent<Rigidbody2D>();
         level_controller = FindObjectOfType<LevelController>();
+        //initializing to total health.
+        health_left = hearts.Length;
     }
 
     private void Update()
@@ -123,15 +128,28 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Key picked up!!!");
     }
 
-    public void KillPlayer()
+    public void LoseOneHeart()
     {
-        Debug.Log("Player Died :(");
+        Debug.Log("In loseoneheart");
+        if(health_left > 0)
+        {
+            Debug.Log("be4 138 --" + health_left);
+            hearts[health_left  - 1].enabled = false;
+            health_left--;
+        }
+        if(health_left == 0)
+        {
+            animator.Play("Ellen_Death");
+        }
+    }
+
+    private void KillPlayer()
+    {
         ReloadLevel();
     }
 
     private void ReloadLevel()
     {
-        Debug.Log("Level Restarted!!!");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
