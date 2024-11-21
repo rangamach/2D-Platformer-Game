@@ -12,7 +12,7 @@ public class EnemyController : MonoBehaviour
     private Transform initial_transform;
     private float mid_point;
     //If true move left to right.
-    private bool forward;
+    [SerializeField] bool forward;
     //If false input speed.
     private int look;
     //If false will pause for 5 seconds.
@@ -24,10 +24,12 @@ public class EnemyController : MonoBehaviour
     {
         patrol_distance /= 2;
         initial_transform = transform;
-        mid_point = initial_transform.position.x + (patrol_distance);
-        forward = true;
+        if(forward)
+            mid_point = initial_transform.position.x + (patrol_distance);
+        else
+            mid_point = initial_transform.position.x - (patrol_distance);
         moving = true;
-        flipped = false;
+        flipped = true;
         look = 1;
     }
 
@@ -75,10 +77,7 @@ public class EnemyController : MonoBehaviour
             moving = false;
 
         }
-        if (look == 0)
-            anim.SetFloat("Look", look);
-        else if (look == 1)
-            anim.SetFloat("Look", look);
+        anim.SetFloat("Look", look);
         transform.position = position;
     }
 
