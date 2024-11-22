@@ -15,7 +15,7 @@ public class LevelController : MonoBehaviour
     private void Awake()
     {
         //number of scenes in build.
-        total_scenes = SceneManager.sceneCount;
+        total_scenes = SceneManager.sceneCountInBuildSettings;
         //spawns player at beginning when loading scene.
         transform.position = checkpoints[checkpoint_count].transform.position;
     }
@@ -32,11 +32,11 @@ public class LevelController : MonoBehaviour
             else if (checkpoint_count == checkpoints.Length - 1)
             {
                 int scene_ind = SceneManager.GetActiveScene().buildIndex;
-                if(scene_ind == total_scenes)
+                if(scene_ind == total_scenes - 1)
                 {
                     Debug.Log("Game Complete!!!");
                 }
-                else if (scene_ind < total_scenes)
+                else if (scene_ind < total_scenes - 1)
                 {
                     SceneManager.LoadScene(scene_ind + 1);
                 }

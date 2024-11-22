@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private int health_left;
 
     [SerializeField] ScoreController score_controller;
+    [SerializeField] GameOverController game_over_controller;
     [SerializeField] Image[] hearts; 
     [SerializeField] float running_speed;
     [SerializeField] float jump;
@@ -130,12 +131,9 @@ public class PlayerController : MonoBehaviour
 
     public void LoseOneHeart()
     {
-        Debug.Log("In loseoneheart");
         if(health_left > 0)
         {
-            Debug.Log("be4 138 --" + health_left);
-            hearts[health_left  - 1].enabled = false;
-            health_left--;
+            hearts[--health_left].enabled = false;
         }
         if(health_left == 0)
         {
@@ -145,11 +143,7 @@ public class PlayerController : MonoBehaviour
 
     private void KillPlayer()
     {
-        ReloadLevel();
+        game_over_controller.PlayerDied();
+        this.enabled = false;
     }
-
-    private void ReloadLevel()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-}
+} 
