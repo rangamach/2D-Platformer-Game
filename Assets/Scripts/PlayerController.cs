@@ -126,7 +126,6 @@ public class PlayerController : MonoBehaviour
     public void PickUpKey()
     {
         score_controller.IncreaseScore(10);
-        Debug.Log("Key picked up!!!");
     }
 
     public void LoseOneHeart()
