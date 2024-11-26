@@ -28,12 +28,13 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         if (GetLevelStatus(all_level_names[0]) == LevelStatus.Locked)
-            SetLevelStatus(all_level_names[0], LevelStatus.Unlocked);    
+            SetLevelStatus(all_level_names[0], LevelStatus.Unlocked); 
     }
 
     public LevelStatus GetLevelStatus(string level_name)
     {
-        LevelStatus level_status = (LevelStatus)PlayerPrefs.GetInt(level_name, 0);
+        Debug.Log("in GetLevelStatus" +  level_name);
+        LevelStatus level_status = (LevelStatus)PlayerPrefs.GetInt(level_name);
         return level_status;
     }
 
@@ -47,10 +48,16 @@ public class LevelManager : MonoBehaviour
     {
         Scene current_scene = SceneManager.GetActiveScene();
         SetLevelStatus(current_scene.name, LevelStatus.Completed);
-        int current_scene_index = Array.FindIndex(all_level_names, level_name => level_name == current_scene.name);
-        int next_scene_index = current_scene_index + 1;
-        if (next_scene_index < all_level_names.Length)
-            SetLevelStatus(all_level_names[next_scene_index], LevelStatus.Unlocked);
+        string next_scene_name = NameFromIndex(SceneManager.GetActiveScene().buildIndex + 1);
+        SetLevelStatus(next_scene_name, LevelStatus.Unlocked);
+    }
 
+    private string NameFromIndex(int index)
+    {
+        string path_to_name = SceneUtility.GetScenePathByBuildIndex(index);
+        int slash = path_to_name.LastIndexOf('/');
+        string name = path_to_name.Substring(slash + 1);
+        int dot = name.LastIndexOf(".");
+        return name.Substring(0, dot);
     }
 }

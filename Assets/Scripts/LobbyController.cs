@@ -45,11 +45,12 @@ public class LobbyController : MonoBehaviour
     
     private void LoadLevel(string level_name)
     {
+        Debug.Log(level_name);
         LevelStatus level_status = LevelManager.Instance.GetLevelStatus(level_name);
         switch(level_status)
         {
             case LevelStatus.Locked:
-                Debug.Log("Level is locked.");
+                Debug.Log( level_name + " is locked.");
                 break;
             case LevelStatus.Unlocked:
                 SceneManager.LoadScene(level_name);
