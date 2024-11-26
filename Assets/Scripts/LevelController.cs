@@ -11,9 +11,11 @@ public class LevelController : MonoBehaviour
     private int checkpoint_count = 1;
     private PlayerController player;
     [SerializeField] Transform[] checkpoints;
+    [SerializeField] GameOverController game_over_controller;
 
     private void Awake()
     {
+        player = FindAnyObjectByType<PlayerController>();
         //number of scenes in build.
         total_scenes = SceneManager.sceneCountInBuildSettings;
         //spawns player at beginning when loading scene.
@@ -38,7 +40,10 @@ public class LevelController : MonoBehaviour
                 }
                 else if (scene_ind < total_scenes - 1)
                 {
-                    SceneManager.LoadScene(scene_ind + 1);
+                    LevelManager.Instance.MarkCurrentLevelComplete();
+                    player.GetComponent<PlayerController>().enabled = false;
+                    game_over_controller.PlayerDied();
+                    //SceneManager.LoadScene(scene_ind + 1);
                 }
             }
         }

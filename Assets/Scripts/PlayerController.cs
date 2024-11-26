@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
         this.transform.position = transform.position;
     }
 
-    public void PickUpKey()
+    public void PickUpKey() 
     {
         score_controller.IncreaseScore(10);
     }
