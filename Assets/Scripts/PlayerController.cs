@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded = true;
     private LevelController level_controller;
     private int health_left;
+    private bool player_death_sound;
 
     [SerializeField] ScoreController score_controller;
     [SerializeField] GameOverController game_over_controller;
@@ -24,10 +25,13 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        ParticleEffectManager.Instance.PlayParticleEffect(ParticleEffectTypes.PlayerSpawn, gameObject.transform);
+        SoundManager.Instance.PlaySoundEffect(SoundTypes.PlayerSpawn);
         rb2d = gameObject.GetComponent<Rigidbody2D>();
         level_controller = FindObjectOfType<LevelController>();
         //initializing to total health.
         health_left = hearts.Length;
+        player_death_sound = false;
     }
 
     private void Update()
@@ -54,7 +58,10 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.gameObject.layer == 8)
         {
-            transform.position = level_controller.GetCheckpoints()[level_controller.GetCheckpointCount() - 1].position;
+            Transform trans = level_controller.GetCheckpoints()[level_controller.GetCheckpointCount() - 1];
+            transform.position = trans.position;
+            ParticleEffectManager.Instance.PlayParticleEffect(ParticleEffectTypes.PlayerSpawn, trans);
+            SoundManager.Instance.PlaySoundEffect(SoundTypes.PlayerSpawn);
         }
     }
 
@@ -81,6 +88,7 @@ public class PlayerController : MonoBehaviour
                 isGrounded = false;
                 animator.SetBool("Jump", true);
                 rb2d.AddForce(new Vector2(0f, jump), ForceMode2D.Impulse);
+                SoundManager.Instance.PlaySoundEffect(SoundTypes.PlayerJump);
             }
         }
         else
@@ -115,6 +123,8 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 position = transform.position;
         position.x += horizontal_input_speed * running_speed * Time.deltaTime;
+        //if (Mathf.Abs(horizontal_input_speed) > 0 && isGrounded)
+        //    SoundManager.Instance.PlaySoundEffect(SoundTypes.PlayerMove);
         transform.position = position;
     }
 
@@ -130,12 +140,19 @@ public class PlayerController : MonoBehaviour
 
     public void LoseOneHeart()
     {
+        ParticleEffectManager.Instance.PlayParticleEffect(ParticleEffectTypes.EnemyHit, transform);
+        SoundManager.Instance.PlaySoundEffect(SoundTypes.EnemyHit);
         if(health_left > 0)
         {
             hearts[--health_left].enabled = false;
         }
         if(health_left == 0)
         {
+            if (!player_death_sound)
+            {
+                player_death_sound = true;
+                SoundManager.Instance.PlaySoundEffect(SoundTypes.PlayerDeath);
+            }
             animator.Play("Ellen_Death");
         }
     }

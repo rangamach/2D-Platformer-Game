@@ -33,7 +33,6 @@ public class LevelManager : MonoBehaviour
 
     public LevelStatus GetLevelStatus(string level_name)
     {
-        Debug.Log("in GetLevelStatus" +  level_name);
         LevelStatus level_status = (LevelStatus)PlayerPrefs.GetInt(level_name);
         return level_status;
     }
@@ -41,7 +40,6 @@ public class LevelManager : MonoBehaviour
     public void SetLevelStatus(string level_name, LevelStatus level_status)
     {
         PlayerPrefs.SetInt(level_name, (int)level_status);
-        Debug.Log(level_name + " - status - " + level_status);
     }
 
     public void MarkCurrentLevelComplete()

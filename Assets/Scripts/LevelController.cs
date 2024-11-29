@@ -37,13 +37,17 @@ public class LevelController : MonoBehaviour
                 if(scene_ind == total_scenes - 1)
                 {
                     Debug.Log("Game Complete!!!");
+                    SoundManager.Instance.PlaySoundEffect(SoundTypes.LevelComplete);
+                    ParticleEffectManager.Instance.PlayParticleEffect(ParticleEffectTypes.LevelComplete, player.transform);
                 }
                 else if (scene_ind < total_scenes - 1)
                 {
                     LevelManager.Instance.MarkCurrentLevelComplete();
                     player.GetComponent<PlayerController>().enabled = false;
+                    player.GetComponent<Animator>().SetFloat("HorizontalSpeed", 0f);
+                    SoundManager.Instance.PlaySoundEffect(SoundTypes.LevelComplete);
+                    ParticleEffectManager.Instance.PlayParticleEffect(ParticleEffectTypes.GamneComplete, player.transform);
                     game_over_controller.PlayerDied();
-                    //SceneManager.LoadScene(scene_ind + 1);
                 }
             }
         }

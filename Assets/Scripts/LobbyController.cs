@@ -35,6 +35,7 @@ public class LobbyController : MonoBehaviour
 
     private void LevelSelection()
     {
+        SoundManager.Instance.PlaySoundEffect(SoundTypes.ButtonClick);
         SceneManager.LoadScene(1);
     }
 
@@ -45,17 +46,18 @@ public class LobbyController : MonoBehaviour
     
     private void LoadLevel(string level_name)
     {
-        Debug.Log(level_name);
         LevelStatus level_status = LevelManager.Instance.GetLevelStatus(level_name);
         switch(level_status)
         {
             case LevelStatus.Locked:
-                Debug.Log( level_name + " is locked.");
+                SoundManager.Instance.PlaySoundEffect(SoundTypes.LockedLevel);
                 break;
             case LevelStatus.Unlocked:
+                SoundManager.Instance.PlaySoundEffect(SoundTypes.ButtonClick);
                 SceneManager.LoadScene(level_name);
                 break;
             case LevelStatus.Completed:
+                SoundManager.Instance.PlaySoundEffect(SoundTypes.ButtonClick);
                 SceneManager.LoadScene(level_name);
                 break;
         }

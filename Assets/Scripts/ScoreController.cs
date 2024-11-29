@@ -21,6 +21,7 @@ public class ScoreController : MonoBehaviour
 
     public void IncreaseScore(int increment)
     {
+        SoundManager.Instance.PlaySoundEffect(SoundTypes.Pickup);
         score += increment;
         RefreshUI();
     }
