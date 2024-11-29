@@ -5,22 +5,25 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Events;
 
 public class LobbyController : MonoBehaviour
 {
     [SerializeField] Button play_button;
     [SerializeField] Button exit_button;
+    [SerializeField] Button controls_button;
     [SerializeField] Button back_button;
     [SerializeField] Button[] levels;
 
     private void Awake()
     {
-        if (play_button && exit_button)
+        if (play_button && exit_button && controls_button)
         {
             play_button.onClick.AddListener(LevelSelection);
             exit_button.onClick.AddListener(ExitGame);
+            controls_button.onClick.AddListener(Controls);
         }
-        if(levels.Length > 0 && back_button)
+        else if(levels.Length > 0 && back_button)
         {
             back_button.onClick.AddListener(MainMenu);
             for(int i = 0;i< levels.Length;i++)
@@ -30,8 +33,17 @@ public class LobbyController : MonoBehaviour
                 levels[i].onClick.AddListener(() => LoadLevel(text));
             }
         }
+        else if(back_button)
+        {
+            back_button.onClick.AddListener(MainMenu);
+        }
     }
 
+    private void Controls()
+    {
+        SoundManager.Instance.PlaySoundEffect(SoundTypes.ButtonClick);
+        SceneManager.LoadScene(2);
+    }
 
     private void LevelSelection()
     {
@@ -41,6 +53,7 @@ public class LobbyController : MonoBehaviour
 
     private void MainMenu()
     {
+        SoundManager.Instance.PlaySoundEffect(SoundTypes.ButtonClick);
         SceneManager.LoadScene(0);
     }
     

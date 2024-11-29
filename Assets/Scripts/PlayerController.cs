@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Windows.Speech;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour

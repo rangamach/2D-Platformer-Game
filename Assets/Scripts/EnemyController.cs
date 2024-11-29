@@ -22,8 +22,11 @@ public class EnemyController : MonoBehaviour
 
     private void Awake()
     {
+        // stores half of the distance of patrol.
         patrol_distance /= 2;
+        // stores initial position.
         initial_transform = transform;
+        // calculates midpoint of patrol based on the starting direction of enemy.
         if(forward)
             mid_point = initial_transform.position.x + (patrol_distance);
         else
