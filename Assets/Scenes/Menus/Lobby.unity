@@ -1021,15 +1021,15 @@ MonoBehaviour:
   - sound_type: 4
     sound_clip: {fileID: 8300000, guid: 8bd8733416fcfc14ea56d325635fc59a, type: 3}
   - sound_type: 5
-    sound_clip: {fileID: 8300000, guid: e987356d3e4bc464696e14176c2ff353, type: 3}
-  - sound_type: 6
-    sound_clip: {fileID: 8300000, guid: 31b2284e8ab3f244182080ca7da474b7, type: 3}
-  - sound_type: 8
-    sound_clip: {fileID: 8300000, guid: 3dac3cf71a910654db0b4cf21a6a3673, type: 3}
-  - sound_type: 9
-    sound_clip: {fileID: 8300000, guid: 51b273b895256294d898c790e3305b22, type: 3}
-  - sound_type: 5
     sound_clip: {fileID: 8300000, guid: 4e349dc959014a845b9aa317d1c2b7f0, type: 3}
+  - sound_type: 9
+    sound_clip: {fileID: 8300000, guid: 3dac3cf71a910654db0b4cf21a6a3673, type: 3}
+  - sound_type: 10
+    sound_clip: {fileID: 8300000, guid: 51b273b895256294d898c790e3305b22, type: 3}
+  - sound_type: 7
+    sound_clip: {fileID: 8300000, guid: 10cc5ea9e99c3f04f8585de058c96c55, type: 3}
+  - sound_type: 6
+    sound_clip: {fileID: 8300000, guid: e987356d3e4bc464696e14176c2ff353, type: 3}
 --- !u!4 &1122155462
 Transform:
   m_ObjectHideFlags: 0

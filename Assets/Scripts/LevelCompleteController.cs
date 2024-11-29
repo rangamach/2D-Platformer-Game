@@ -14,9 +14,9 @@ public class LevelCompleteController : MonoBehaviour
         main_menu_button.onClick.AddListener(BackToMainMenu);
     }
 
-    public void LevelEnd()
+    public void LevelComplete()
     {
-        gameObject.SetActive(true);
+        StartCoroutine(Delay());
     }
 
     private void ReloadLevel()
@@ -27,5 +27,11 @@ public class LevelCompleteController : MonoBehaviour
     private void BackToMainMenu()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(1);
+        gameObject.transform.GetChild(0).gameObject.SetActive(true);
     }
 }

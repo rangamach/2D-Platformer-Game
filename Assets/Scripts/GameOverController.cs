@@ -31,7 +31,6 @@ public class GameOverController : MonoBehaviour
     public IEnumerator Delay()
     {
         yield return new WaitForSeconds(1);
-        //gameObject.SetActive(true);
         gameObject.transform.GetChild(0).gameObject.SetActive(true);
     }
 }

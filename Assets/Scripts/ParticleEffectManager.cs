@@ -66,5 +66,5 @@ public enum ParticleEffectTypes
     PlayerSpawn,
     LevelComplete,
     EnemyHit,
-    GamneComplete
+    GameComplete
 }

@@ -58,10 +58,14 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.gameObject.layer == 8)
         {
-            Transform trans = level_controller.GetCheckpoints()[level_controller.GetCheckpointCount() - 1];
-            transform.position = trans.position;
-            ParticleEffectManager.Instance.PlayParticleEffect(ParticleEffectTypes.PlayerSpawn, trans);
-            SoundManager.Instance.PlaySoundEffect(SoundTypes.PlayerSpawn);
+            LoseOneHeart();
+            if (health_left > 0)
+            {
+                Transform trans = level_controller.GetCheckpoints()[level_controller.GetCheckpointCount() - 1];
+                transform.position = trans.position;
+                ParticleEffectManager.Instance.PlayParticleEffect(ParticleEffectTypes.PlayerSpawn, trans);
+                SoundManager.Instance.PlaySoundEffect(SoundTypes.PlayerSpawn);
+            }
         }
     }
 
@@ -123,8 +127,6 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 position = transform.position;
         position.x += horizontal_input_speed * running_speed * Time.deltaTime;
-        //if (Mathf.Abs(horizontal_input_speed) > 0 && isGrounded)
-        //    SoundManager.Instance.PlaySoundEffect(SoundTypes.PlayerMove);
         transform.position = position;
     }
 
@@ -138,10 +140,15 @@ public class PlayerController : MonoBehaviour
         score_controller.IncreaseScore(10);
     }
 
-    public void LoseOneHeart()
+    public void EnemyHit()
     {
         ParticleEffectManager.Instance.PlayParticleEffect(ParticleEffectTypes.EnemyHit, transform);
         SoundManager.Instance.PlaySoundEffect(SoundTypes.EnemyHit);
+        LoseOneHeart();
+    }
+
+    private void LoseOneHeart()
+    {
         if(health_left > 0)
         {
             hearts[--health_left].enabled = false;

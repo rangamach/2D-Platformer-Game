@@ -12,6 +12,7 @@ public class LevelController : MonoBehaviour
     private PlayerController player;
     [SerializeField] Transform[] checkpoints;
     [SerializeField] GameOverController game_over_controller;
+    [SerializeField] LevelCompleteController level_complete_controller;
 
     private void Awake()
     {
@@ -33,21 +34,22 @@ public class LevelController : MonoBehaviour
             }
             else if (checkpoint_count == checkpoints.Length - 1)
             {
+                player.GetComponent<Animator>().SetFloat("HorizontalSpeed", 0f);
+                player.GetComponent<PlayerController>().enabled = false;
                 int scene_ind = SceneManager.GetActiveScene().buildIndex;
+                Debug.Log("scene ind - " + scene_ind);
                 if(scene_ind == total_scenes - 1)
                 {
-                    Debug.Log("Game Complete!!!");
                     SoundManager.Instance.PlaySoundEffect(SoundTypes.LevelComplete);
-                    ParticleEffectManager.Instance.PlayParticleEffect(ParticleEffectTypes.LevelComplete, player.transform);
+                    ParticleEffectManager.Instance.PlayParticleEffect(ParticleEffectTypes.GameComplete, player.transform);
+                    game_over_controller.PlayerDied();
                 }
                 else if (scene_ind < total_scenes - 1)
                 {
                     LevelManager.Instance.MarkCurrentLevelComplete();
-                    player.GetComponent<PlayerController>().enabled = false;
-                    player.GetComponent<Animator>().SetFloat("HorizontalSpeed", 0f);
                     SoundManager.Instance.PlaySoundEffect(SoundTypes.LevelComplete);
-                    ParticleEffectManager.Instance.PlayParticleEffect(ParticleEffectTypes.GamneComplete, player.transform);
-                    game_over_controller.PlayerDied();
+                    ParticleEffectManager.Instance.PlayParticleEffect(ParticleEffectTypes.LevelComplete, player.transform);
+                    level_complete_controller.LevelComplete();
                 }
             }
         }

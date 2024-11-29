@@ -92,7 +92,7 @@ public class EnemyController : MonoBehaviour
         if(collision.gameObject.GetComponent<PlayerController>())
         {
             PlayerController player_controller = collision.gameObject.GetComponent<PlayerController>();
-            player_controller.LoseOneHeart();
+            player_controller.EnemyHit();
         }
     }
 }
