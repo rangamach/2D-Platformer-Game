@@ -1,0 +1,37 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+public class LevelCompleteController : MonoBehaviour
+{
+    [SerializeField] Button restart_button;
+    [SerializeField] Button main_menu_button;
+    private void Awake()
+    {
+        restart_button.onClick.AddListener(ReloadLevel);
+        main_menu_button.onClick.AddListener(BackToMainMenu);
+    }
+
+    public void LevelComplete()
+    {
+        StartCoroutine(Delay());
+    }
+
+    private void ReloadLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void BackToMainMenu()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public IEnumerator Delay()
+    {
+        yield return new WaitForSeconds(1);
+        gameObject.transform.GetChild(0).gameObject.SetActive(true);
+    }
+}
